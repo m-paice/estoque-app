@@ -1,8 +1,14 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { ShoppingCartIcon } from "@heroicons/react/16/solid";
+import {
+  Bars3BottomLeftIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/16/solid";
+import { useSidebarContext } from "../context/Sidebar";
+import { Sidebar } from "../components/Sidebar";
 
 export function Layout() {
   const navigate = useNavigate();
+  const { closeSidebar, isSidebarOpen, openSidebar } = useSidebarContext();
 
   return (
     <div
@@ -19,7 +25,27 @@ export function Layout() {
           alignItems: "center",
         }}
       >
-        <h1 onClick={() => navigate("")}>My Store</h1>
+        <div
+          style={{
+            display: "flex",
+            gap: 20,
+            alignItems: "center",
+          }}
+        >
+          <button
+            style={{
+              padding: 10,
+              backgroundColor: "#ebf3fe",
+              border: "none",
+              borderRadius: 10,
+              cursor: "pointer",
+            }}
+            onClick={isSidebarOpen ? closeSidebar : openSidebar}
+          >
+            <Bars3BottomLeftIcon width={20} />
+          </button>
+          <h1 onClick={() => navigate("")}>My Store</h1>
+        </div>
         <div
           onClick={() => navigate("cart")}
           style={{
@@ -45,7 +71,7 @@ export function Layout() {
       </header>
       <section
         style={{
-          height: "calc(100vh - 130px)",
+          height: "calc(100vh - 140px)",
           overflowY: "auto",
         }}
       >
@@ -71,6 +97,8 @@ export function Layout() {
           My Store - CNPJ: 00.000.000/0000-00
         </p>
       </footer>
+
+      <Sidebar />
     </div>
   );
 }

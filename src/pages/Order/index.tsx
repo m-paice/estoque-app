@@ -56,9 +56,9 @@ export function Order() {
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-              gap: 10,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <p
@@ -66,7 +66,7 @@ export function Order() {
                 fontSize: 20,
               }}
             >
-              Valor Total:{" "}
+              Valor Total
             </p>
             <h4
               style={{
@@ -83,20 +83,29 @@ export function Order() {
             </h4>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            backgroundColor: "#ebf3fe",
+            padding: 10,
+            borderRadius: 10,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <p
             style={{
               textAlign: "center",
               fontSize: 20,
+              width: "100%",
             }}
           >
-            Aguardando confirmação.
+            Aguardando confirmação
           </p>
         </div>
         <Products products={products} />
         <PersonalData />
         <Address />
-
         <Payment />
 
         <Button variant="text" color="danger">

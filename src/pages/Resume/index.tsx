@@ -67,7 +67,7 @@ export function Resume() {
               justifyContent: "flex-end",
               alignItems: "flex-end",
               gap: 10,
-              margin: "20px 0",
+              marginBottom: 40,
             }}
           >
             <p

@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 
 export function PersonalData() {
   return (
-    <div>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: 10,
+        borderRadius: 10,
+      }}
+    >
       <div
         style={{
           display: "flex",

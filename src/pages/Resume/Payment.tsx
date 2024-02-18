@@ -1,7 +1,29 @@
 export function Payment() {
   return (
-    <div>
-      <h4>Forma de pagamento</h4>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: 10,
+        borderRadius: 10,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <h4>
+          Forma de pagamento{" "}
+          <span
+            style={{
+              fontWeight: "normal",
+            }}
+          >
+            {" "}
+            (o pagamento será feito na entrega)
+          </span>
+        </h4>
+      </div>
 
       <div
         style={{
@@ -38,8 +60,6 @@ export function Payment() {
           <label htmlFor="pix">Pix</label>
         </div>
       </div>
-
-      <p>O pagamento será realizado na entrega</p>
     </div>
   );
 }

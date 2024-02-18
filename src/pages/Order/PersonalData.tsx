@@ -1,6 +1,12 @@
 export function PersonalData() {
   return (
-    <div>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: 10,
+        borderRadius: 10,
+      }}
+    >
       <h4>Dados pessoais</h4>
 
       <div

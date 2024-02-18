@@ -1,6 +1,12 @@
 export function Address() {
   return (
-    <div>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: 10,
+        borderRadius: 10,
+      }}
+    >
       <h4>Endereço</h4>
 
       <div

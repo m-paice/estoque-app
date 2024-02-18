@@ -14,7 +14,7 @@ export function Layout() {
     <div
       style={{
         display: "grid",
-        gridTemplateRows: "80px auto 50px",
+        gridTemplateRows: "80px auto",
       }}
     >
       <header
@@ -71,32 +71,13 @@ export function Layout() {
       </header>
       <section
         style={{
-          height: "calc(100vh - 140px)",
+          height: "calc(100vh - 130px)",
           overflowY: "auto",
+          padding: 20,
         }}
       >
         <Outlet />
       </section>
-      <footer
-        style={{
-          marginBottom: 40,
-        }}
-      >
-        <p
-          style={{
-            textAlign: "center",
-          }}
-        >
-          &copy; {new Date().getFullYear()} My Store
-        </p>
-        <p
-          style={{
-            textAlign: "center",
-          }}
-        >
-          My Store - CNPJ: 00.000.000/0000-00
-        </p>
-      </footer>
 
       <Sidebar />
     </div>

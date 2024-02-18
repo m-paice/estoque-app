@@ -18,11 +18,7 @@ export function Details() {
   const navigate = useNavigate();
 
   return (
-    <div
-      style={{
-        padding: 20,
-      }}
-    >
+    <div>
       <div
         style={{
           backgroundColor: "#ebf3fe",
@@ -128,8 +124,7 @@ export function Details() {
                 gap: 10,
               }}
             >
-              <Button>Comprar agora</Button>
-              <Button onClick={() => navigate("/cart")} color="danger">
+              <Button onClick={() => navigate("/cart")}>
                 Adicionar ao carrinho
               </Button>
             </div>

@@ -3,35 +3,25 @@ import { useSidebarContext } from "../../context/Sidebar";
 import {
   ClipboardIcon,
   HomeIcon,
-  UsersIcon,
   WrenchIcon,
   XCircleIcon,
 } from "@heroicons/react/16/solid";
 
 const items = [
   {
-    name: "Dashboard",
+    name: "Início",
     path: "/",
     icon: HomeIcon,
   },
   {
-    name: "Users",
-    path: "/",
-    icon: UsersIcon,
-  },
-  {
-    name: "Products",
-    path: "/",
-    icon: UsersIcon,
-  },
-  {
-    name: "Orders",
-    path: "/",
+    name: "Pedidos",
+    path: "/orders",
     icon: ClipboardIcon,
   },
+
   {
-    name: "Settings",
-    path: "/",
+    name: "Configurações",
+    path: "/settings",
     icon: WrenchIcon,
   },
 ];
@@ -122,6 +112,7 @@ export function Sidebar() {
               <item.icon width={30} color="#2a3547" />
               <Link
                 to={item.path}
+                onClick={closeSidebar}
                 style={{
                   textDecoration: "none",
                   color: "#2a3547",

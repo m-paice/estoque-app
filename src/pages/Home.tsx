@@ -142,11 +142,7 @@ export function Home() {
   const navigate = useNavigate();
 
   return (
-    <div
-      style={{
-        padding: 20,
-      }}
-    >
+    <div>
       <div
         style={{
           backgroundColor: "#ebf3fe",

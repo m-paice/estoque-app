@@ -91,14 +91,10 @@ const products = [
 
 export function Products() {
   const navigate = useNavigate();
-  const [isViewColumn, setIsViewColumn] = useState(false);
+  const [isViewColumn, setIsViewColumn] = useState(true);
 
   return (
-    <div
-      style={{
-        padding: 20,
-      }}
-    >
+    <div>
       <div
         style={{
           backgroundColor: "#ebf3fe",

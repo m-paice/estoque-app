@@ -30,11 +30,7 @@ export function Cart() {
   const navigate = useNavigate();
 
   return (
-    <div
-      style={{
-        padding: 20,
-      }}
-    >
+    <div>
       <div
         style={{
           backgroundColor: "#ebf3fe",
@@ -191,7 +187,9 @@ export function Cart() {
             </Button>
           </div>
         ))}
-        <Button>Finalizar compra</Button>
+        <Button onClick={() => navigate("/personal-data")}>
+          Finalizar compra
+        </Button>
       </div>
     </div>
   );

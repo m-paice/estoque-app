@@ -64,8 +64,9 @@ export function Resume() {
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
               gap: 10,
               marginBottom: 40,
             }}
@@ -75,7 +76,7 @@ export function Resume() {
                 fontSize: 20,
               }}
             >
-              Valor Total:{" "}
+              Valor Total{" "}
             </p>
             <h4
               style={{

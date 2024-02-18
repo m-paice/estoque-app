@@ -20,7 +20,7 @@ export function Payment() {
             }}
           >
             {" "}
-            (o pagamento será feito na entrega)
+            (O pagamento será feito na entrega)
           </span>
         </h4>
       </div>

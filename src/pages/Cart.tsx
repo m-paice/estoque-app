@@ -187,9 +187,7 @@ export function Cart() {
             </Button>
           </div>
         ))}
-        <Button onClick={() => navigate("/personal-data")}>
-          Finalizar compra
-        </Button>
+        <Button onClick={() => navigate("/login")}>Finalizar compra</Button>
       </div>
     </div>
   );

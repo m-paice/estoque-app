@@ -98,6 +98,8 @@ export function Order() {
               textAlign: "center",
               fontSize: 20,
               width: "100%",
+              color: "orange",
+              fontWeight: "bold",
             }}
           >
             Aguardando confirmação

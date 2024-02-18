@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 
-export function PersonalData() {
+export function Login() {
   const navigate = useNavigate();
 
   return (
@@ -15,28 +15,28 @@ export function PersonalData() {
           marginBottom: 20,
         }}
       >
-        <p style={{ fontSize: 20 }}>Dados Pessoais</p>
+        <p style={{ fontSize: 20 }}>Login</p>
       </div>
 
       <div
         style={{
-          marginBottom: 40,
+          display: "flex",
+          flexDirection: "column",
+          gap: 40,
         }}
       >
-        <Input label="Nome" />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 10,
-          }}
-        >
+        <div>
+          <h4>Dados de acesso</h4>
           <Input label="Telefone" />
-          <Input label="CPF" />
+          <Input label="Senha" />
         </div>
+
+        <Button onClick={() => navigate("/resume")}>Login</Button>
       </div>
 
-      <Button onClick={() => navigate("/resume")}>Salvar</Button>
+      <Button variant="text" onClick={() => navigate("/register")}>
+        registrar agora
+      </Button>
     </div>
   );
 }

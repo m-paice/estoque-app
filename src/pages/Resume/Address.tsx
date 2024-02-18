@@ -16,7 +16,7 @@ export function Address() {
         }}
       >
         <h4>Endereço</h4>
-        <Link to="/personal-data">editar</Link>
+        <Link to="/address">editar</Link>
       </div>
       <div
         style={{

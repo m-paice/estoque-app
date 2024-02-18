@@ -6,32 +6,39 @@ const orders = [
   {
     id: 1,
     client: "João",
-    status: "Aguardando confirmação",
+    status: "waiting",
     date: "10/10/2024 10:50:00",
     total: 100,
   },
   {
     id: 2,
     client: "Maria",
-    status: "A caminho",
+    status: "on-the-way",
     date: "10/10/2024 22:50:00",
     total: 100,
   },
   {
     id: 3,
     client: "José",
-    status: "Entregue",
+    status: "delivered",
     date: "10/10/2024 23:50:00",
     total: 100,
   },
   {
     id: 4,
     client: "Pedro",
-    status: "Entregue",
+    status: "canceled",
     date: "10/10/2024 23:50:00",
     total: 100,
   },
 ];
+
+const status: { [key: string]: string[] } = {
+  ["waiting"]: ["Aguardando confirmação", "orange"],
+  ["on-the-way"]: ["A caminho", "green"],
+  ["delivered"]: ["Entregue", "blue"],
+  ["canceled"]: ["Cancelado", "red"],
+};
 
 export function Orders() {
   const navigate = useNavigate();
@@ -85,12 +92,25 @@ export function Orders() {
 
             <div
               style={{
+                backgroundColor: "#ebf3fe",
+                padding: 10,
+                borderRadius: 10,
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
-              <p>Status: {order.status}</p>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: 20,
+                  width: "100%",
+                  color: status[order.status][1],
+                  fontWeight: "bold",
+                }}
+              >
+                {status[order.status][0]}
+              </p>
             </div>
             <Button
               variant="text"

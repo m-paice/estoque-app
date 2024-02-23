@@ -1,33 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Colors } from "../components/Colors";
-
-const products = [
-  {
-    id: 1,
-    image: "https://source.unsplash.com/300x300/?labtop",
-    name: "Notebook de Notebook",
-    price: 2500,
-    amount: 2,
-  },
-  {
-    id: 2,
-    image: "https://source.unsplash.com/300x300/?smartphone",
-    name: "Smartphone",
-    price: 1500,
-    amount: 1,
-  },
-  {
-    id: 3,
-    image: "https://source.unsplash.com/300x300/?tablet",
-    name: "Tablet",
-    price: 800,
-    amount: 3,
-  },
-];
+import { useCartContext } from "../context/Cart";
 
 export function Cart() {
   const navigate = useNavigate();
+  const { products, removeProduct } = useCartContext();
 
   return (
     <div>
@@ -56,6 +34,15 @@ export function Cart() {
           margin: "10px 0",
         }}
       >
+        {products.length === 0 && (
+          <p
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Carrinho vazio
+          </p>
+        )}
         <Button onClick={() => navigate("/")} variant="text">
           Continuar comprando
         </Button>
@@ -70,9 +57,9 @@ export function Cart() {
           borderRadius: 5,
         }}
       >
-        {products.map((product) => (
+        {products.map((product, index) => (
           <div
-            key={product.id}
+            key={`${product.id}-${index}`}
             style={{
               borderBottom: "1px solid #ebf3fe",
               marginBottom: 20,
@@ -135,7 +122,7 @@ export function Cart() {
               >
                 <div
                   style={{
-                    display: "flex",
+                    display: product.color ? "flex" : "none",
                     gap: 10,
                   }}
                 >
@@ -148,16 +135,21 @@ export function Cart() {
                   >
                     Cor:
                   </p>
-                  <Colors colors={["red"]} />{" "}
+                  <Colors
+                    colors={[product.color]}
+                    selectedColor={product.color}
+                    handleSelectColor={() => {}}
+                    hideSelectedColor
+                  />{" "}
                 </div>
                 <p
                   style={{
-                    display: "flex",
+                    display: product.size ? "flex" : "none",
                     alignItems: "center",
                     gap: 10,
                   }}
                 >
-                  Tamanho: P
+                  Tamanho: {product.size}
                 </p>
                 <p
                   style={{
@@ -166,7 +158,7 @@ export function Cart() {
                     gap: 10,
                   }}
                 >
-                  Qtdade: 2
+                  Qtdade: {product.amount}
                 </p>
                 <p
                   style={{
@@ -182,7 +174,12 @@ export function Cart() {
               </div>
             </div>
 
-            <Button variant="text" size="small" color="danger">
+            <Button
+              variant="text"
+              size="small"
+              color="danger"
+              onClick={() => removeProduct(index)}
+            >
               Remover
             </Button>
           </div>

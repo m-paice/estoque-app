@@ -1,21 +1,66 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { Amounts } from "../components/Amounts";
 import { Badge } from "../components/Badge";
 import { Button } from "../components/Button";
 import { Colors } from "../components/Colors";
 import { Sizes } from "../components/Sizes";
+import { useCartContext } from "../context/Cart";
 
-const product = {
-  id: 1,
-  image: "https://source.unsplash.com/300x300/?labtop",
-  name: "Notebook",
-  description: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  price: 100,
-  oldPrice: 250,
-};
+import { products } from "../mock/products";
+import { useState } from "react";
 
 export function Details() {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const { addProduct } = useCartContext();
+
+  const [amount, setAmount] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+
+  const product = products.find((product) => product.id === id);
+
+  const handleAddProduct = () => {
+    if (!product) return;
+
+    addProduct(
+      {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        amount: 1,
+        color,
+        size,
+      },
+      amount
+    );
+    navigate("/cart");
+  };
+
+  const handleAddAmount = () => {
+    setAmount(amount + 1);
+  };
+  const handleRemoveAmount = () => {
+    if (amount === 1) return;
+    setAmount(amount - 1);
+  };
+
+  const handleSelectColor = (color: string) => {
+    setColor(color);
+  };
+
+  const handleSelectSize = (size: string) => {
+    setSize(size);
+  };
+
+  if (!product)
+    return (
+      <div>
+        <p>carregando</p>
+      </div>
+    );
 
   return (
     <div>
@@ -111,9 +156,24 @@ export function Details() {
                 margin: "20px 0",
               }}
             >
-              <Colors colors={["#ff0000", "#00ff00", "#0000ff"]} />
-              <Sizes sizes={["P", "M", "G"]} />
-              <Amounts value={1} />
+              <Colors
+                colors={product.colors ?? []}
+                selectedColor={color}
+                handleSelectColor={handleSelectColor}
+                hideSelectedColor={product.colors?.length ? false : true}
+              />
+              <Sizes
+                sizes={product.sizes ?? []}
+                selectedSize={size}
+                handleSelectedSize={handleSelectSize}
+                hideSelectedSize={product.sizes?.length ? false : true}
+              />
+
+              <Amounts
+                value={amount}
+                addAmount={handleAddAmount}
+                removeAmount={handleRemoveAmount}
+              />
             </div>
 
             <div
@@ -124,9 +184,7 @@ export function Details() {
                 gap: 10,
               }}
             >
-              <Button onClick={() => navigate("/cart")}>
-                Adicionar ao carrinho
-              </Button>
+              <Button onClick={handleAddProduct}>Adicionar ao carrinho</Button>
             </div>
 
             <div

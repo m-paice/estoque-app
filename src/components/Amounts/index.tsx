@@ -1,8 +1,10 @@
 interface Props {
   value: number;
+  addAmount: () => void;
+  removeAmount: () => void;
 }
 
-export function Amounts({ value }: Props) {
+export function Amounts({ value, addAmount, removeAmount }: Props) {
   return (
     <div
       style={{
@@ -19,6 +21,7 @@ export function Amounts({ value }: Props) {
         }}
       >
         <button
+          onClick={removeAmount}
           style={{
             padding: "5px 20px",
             borderRadius: 5,
@@ -37,6 +40,7 @@ export function Amounts({ value }: Props) {
           {value}
         </p>
         <button
+          onClick={addAmount}
           style={{
             padding: "5px 20px",
             borderRadius: 5,

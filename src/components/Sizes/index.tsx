@@ -1,13 +1,22 @@
 interface Props {
   sizes: string[];
+  selectedSize: string;
+  handleSelectedSize(size: string): void;
+  hideSelectedSize?: boolean;
 }
 
-export function Sizes({ sizes = [] }: Props) {
+export function Sizes({
+  sizes = [],
+  selectedSize,
+  handleSelectedSize,
+  hideSelectedSize,
+}: Props) {
   return (
     <div
       style={{
         display: "flex",
-        alignItems: "center",
+        flexDirection: "column",
+
         gap: 10,
       }}
     >
@@ -19,9 +28,11 @@ export function Sizes({ sizes = [] }: Props) {
       >
         {sizes.map((size) => (
           <span
+            onClick={() => handleSelectedSize(size)}
             key={size}
             style={{
               padding: "5px 10px",
+
               borderRadius: 5,
               border: "1px solid #ccc",
               backgroundColor: "white",
@@ -31,6 +42,15 @@ export function Sizes({ sizes = [] }: Props) {
             {size}
           </span>
         ))}
+      </div>
+      <div
+        style={{
+          display: hideSelectedSize ? "none" : "flex",
+          gap: 10,
+        }}
+      >
+        <strong>Selecionado:</strong>
+        <p> {selectedSize || "nenhum"}</p>
       </div>
     </div>
   );

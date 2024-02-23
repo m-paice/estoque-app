@@ -5,10 +5,12 @@ import {
 } from "@heroicons/react/16/solid";
 import { useSidebarContext } from "../context/Sidebar";
 import { Sidebar } from "../components/Sidebar";
+import { useCartContext } from "../context/Cart";
 
 export function Layout() {
   const navigate = useNavigate();
   const { closeSidebar, isSidebarOpen, openSidebar } = useSidebarContext();
+  const { products } = useCartContext();
 
   return (
     <div
@@ -53,20 +55,22 @@ export function Layout() {
           }}
         >
           <ShoppingCartIcon width={40} />
-          <span
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: -10,
-              backgroundColor: "red",
-              color: "white",
-              borderRadius: "50%",
-              padding: "5px 10px",
-              fontSize: 16,
-            }}
-          >
-            2
-          </span>
+          {products.length > 0 && (
+            <span
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: -10,
+                backgroundColor: "red",
+                color: "white",
+                borderRadius: "50%",
+                padding: "5px 10px",
+                fontSize: 16,
+              }}
+            >
+              {products.length}
+            </span>
+          )}
         </div>
       </header>
       <section

@@ -1,3 +1,4 @@
+import { CartProvider } from "./context/Cart";
 import { SidebarProvider } from "./context/Sidebar";
 import { Routes } from "./routes";
 
@@ -9,9 +10,11 @@ export function App() {
         margin: "0 auto",
       }}
     >
-      <SidebarProvider>
-        <Routes />
-      </SidebarProvider>
+      <CartProvider>
+        <SidebarProvider>
+          <Routes />
+        </SidebarProvider>
+      </CartProvider>
     </div>
   );
 }

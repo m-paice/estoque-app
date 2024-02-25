@@ -1,13 +1,9 @@
 import { Colors } from "../../components/Colors";
+import { Sizes } from "../../components/Sizes";
+import { Product } from "../../context/Cart";
 
 interface Props {
-  products: {
-    id: number;
-    image: string;
-    name: string;
-    price: number;
-    amount: number;
-  }[];
+  products: Product[];
 }
 
 export function Products({ products }: Props) {
@@ -53,8 +49,26 @@ export function Products({ products }: Props) {
                   })}
                 </p>
               </div>
-              <div>
-                <Colors colors={["blue"]} />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  // flexDirection: "column",
+                  gap: 10,
+                }}
+              >
+                <Colors
+                  colors={product.color ? [product.color] : []}
+                  handleSelectColor={() => {}}
+                  selectedColor=""
+                  hideSelectedColor
+                />
+                <Sizes
+                  handleSelectedSize={() => {}}
+                  selectedSize=""
+                  hideSelectedSize
+                  sizes={product.size ? [product.size] : []}
+                />
               </div>
             </div>
           </div>

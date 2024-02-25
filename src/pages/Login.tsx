@@ -1,9 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { useUserContext } from "../context/Auth";
+import { useState } from "react";
 
 export function Login() {
   const navigate = useNavigate();
+  const { handleLogin } = useUserContext();
+
+  const [fields, setFields] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleSubmit = () => {
+    handleLogin({ username: fields.username, password: fields.password });
+  };
 
   return (
     <div>
@@ -27,11 +39,20 @@ export function Login() {
       >
         <div>
           <h4>Dados de acesso</h4>
-          <Input label="Telefone" />
-          <Input label="Senha" />
+          <Input
+            value={fields.username}
+            onChange={(value) => setFields({ ...fields, username: value })}
+            label="Telefone"
+          />
+          <Input
+            value={fields.password}
+            onChange={(value) => setFields({ ...fields, password: value })}
+            label="Senha"
+            type="password"
+          />
         </div>
 
-        <Button onClick={() => navigate("/resume")}>Login</Button>
+        <Button onClick={handleSubmit}>Login</Button>
       </div>
 
       <Button variant="text" onClick={() => navigate("/register")}>

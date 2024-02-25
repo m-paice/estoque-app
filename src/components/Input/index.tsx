@@ -1,9 +1,12 @@
 interface Props {
   label: string;
   type?: string;
+
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-export function Input({ label, type = "text" }: Props) {
+export function Input({ label, type = "text", value, onChange }: Props) {
   return (
     <div
       style={{
@@ -21,6 +24,8 @@ export function Input({ label, type = "text" }: Props) {
           fontSize: 16,
           width: "100%",
         }}
+        value={value}
+        onChange={(e) => onChange?.(e.target.value)}
       />
     </div>
   );

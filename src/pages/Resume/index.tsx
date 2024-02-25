@@ -1,36 +1,37 @@
-import { Button } from "../../components/Button";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Address } from "./Address";
 import { PersonalData } from "./PersonalData";
 import { Products } from "./Products";
 import { Payment } from "./Payment";
-import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/Button";
+import { useCartContext } from "../../context/Cart";
+import { useOrderContext } from "../../context/Orders";
+import { useUserContext } from "../../context/Auth";
 
-const products = [
-  {
-    id: 1,
-    image: "https://source.unsplash.com/300x300/?labtop",
-    name: "Notebook de Notebook",
-    price: 2500,
-    amount: 2,
-  },
-  {
-    id: 2,
-    image: "https://source.unsplash.com/300x300/?smartphone",
-    name: "Smartphone",
-    price: 1500,
-    amount: 1,
-  },
-  {
-    id: 3,
-    image: "https://source.unsplash.com/300x300/?tablet",
-    name: "Tablet",
-    price: 800,
-    amount: 3,
-  },
-];
 export function Resume() {
   const navigate = useNavigate();
+  const { clearCart, products } = useCartContext();
+  const { handleAddOrder } = useOrderContext();
+  const { user } = useUserContext();
+
+  const [payment, setPayment] = useState("credit-card");
+
+  const handleFinishOrder = () => {
+    handleAddOrder({
+      createdAt: new Date(),
+      id: Math.random().toString(36).substr(2, 9),
+      payment,
+      products,
+      status: "awaiting",
+      total: products.reduce((acc, curr) => acc + curr.price * curr.amount, 0),
+      user,
+    });
+
+    navigate("/finished");
+    clearCart();
+  };
 
   return (
     <div>
@@ -58,7 +59,7 @@ export function Resume() {
         <PersonalData />
         <Address />
         <Products products={products} />
-        <Payment />
+        <Payment payment={payment} changePayment={setPayment} />
 
         <div>
           <div
@@ -93,7 +94,7 @@ export function Resume() {
             </h4>
           </div>
 
-          <Button onClick={() => navigate("/finished")}>Fazer pedido</Button>
+          <Button onClick={handleFinishOrder}>Fazer pedido</Button>
         </div>
       </div>
     </div>

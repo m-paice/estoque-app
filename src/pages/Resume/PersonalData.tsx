@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../context/Auth";
 
 export function PersonalData() {
+  const { user } = useUserContext();
+
   return (
     <div
       style={{
@@ -31,9 +34,14 @@ export function PersonalData() {
           <p>CPF</p>
         </div>
         <div>
-          <p>João da Silva</p>
-          <p>(11) 99999-9999</p>
-          <p>999.999.999-99</p>
+          <p>{user.name}</p>
+          <p>{user.cellphone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}</p>
+          <p>
+            {user.document.replace(
+              /(\d{3})(\d{3})(\d{3})(\d{2})/,
+              "$1.$2.$3-$4"
+            )}
+          </p>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { CartProvider } from "./context/Cart";
+import { OrdersProvider } from "./context/Orders";
 import { SidebarProvider } from "./context/Sidebar";
 import { Routes } from "./routes";
 
@@ -12,7 +13,9 @@ export function App() {
     >
       <CartProvider>
         <SidebarProvider>
-          <Routes />
+          <OrdersProvider>
+            <Routes />
+          </OrdersProvider>
         </SidebarProvider>
       </CartProvider>
     </div>

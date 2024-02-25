@@ -2,10 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Colors } from "../components/Colors";
 import { useCartContext } from "../context/Cart";
+import { useUserContext } from "../context/Auth";
 
 export function Cart() {
   const navigate = useNavigate();
   const { products, removeProduct } = useCartContext();
+  const { isLogged } = useUserContext();
 
   return (
     <div>
@@ -184,7 +186,16 @@ export function Cart() {
             </Button>
           </div>
         ))}
-        <Button onClick={() => navigate("/login")}>Finalizar compra</Button>
+        <Button
+          disabled={products.length === 0}
+          onClick={() => {
+            if (products.length === 0) return;
+
+            isLogged ? navigate("/resume") : navigate("/login");
+          }}
+        >
+          Finalizar compra
+        </Button>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ interface Props {
   color?: "info" | "success" | "warning" | "danger";
   variant?: "outlined" | "contained" | "text";
   size?: "small" | "medium" | "large";
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -24,7 +25,7 @@ export function Button({
   color = "info",
   variant = "contained",
   size = "medium",
-
+  disabled = false,
   onClick,
 }: Props) {
   return (
@@ -49,6 +50,7 @@ export function Button({
         fontSize: sizes[size],
         textDecoration: variant === "text" ? "underline" : "none",
         width: "100%",
+        filter: disabled ? "grayscale(1)" : "none",
       }}
     >
       {children}

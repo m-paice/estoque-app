@@ -55,14 +55,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     [products]
   );
 
-  const removeProduct = (index: number) => {
-    const newProducts = products.filter((_, i) => i !== index);
-    setProducts(newProducts);
-  };
+  const removeProduct = useCallback(
+    (index: number) => {
+      const newProducts = products.filter((_, i) => i !== index);
+      setProducts(newProducts);
+    },
+    [products]
+  );
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setProducts([]);
-  };
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -72,7 +75,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       removeProduct,
       clearCart,
     }),
-    [products, addProduct]
+    [products, addProduct, removeProduct, clearCart]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

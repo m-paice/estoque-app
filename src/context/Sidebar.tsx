@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 interface SidebarContextProps {
   isSidebarOpen: boolean;
@@ -21,16 +21,17 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     setIsSidebarOpen(true);
   }
 
+  const value = useMemo(
+    () => ({
+      isSidebarOpen,
+      closeSidebar,
+      openSidebar,
+    }),
+    [isSidebarOpen]
+  );
+
   return (
-    <SidebarContext.Provider
-      value={{
-        isSidebarOpen,
-        closeSidebar,
-        openSidebar,
-      }}
-    >
-      {children}
-    </SidebarContext.Provider>
+    <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>
   );
 }
 

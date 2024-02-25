@@ -6,6 +6,7 @@ import {
   WrenchIcon,
   XCircleIcon,
 } from "@heroicons/react/16/solid";
+import { useUserContext } from "../../context/Auth";
 
 const items = [
   {
@@ -28,6 +29,7 @@ const items = [
 
 export function Sidebar() {
   const { isSidebarOpen, closeSidebar } = useSidebarContext();
+  const { user, isLogged, handleLogout } = useUserContext();
 
   return (
     <div
@@ -76,22 +78,38 @@ export function Sidebar() {
             <XCircleIcon width={20} />
           </button>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 20,
-            marginBottom: 40,
-          }}
-        >
-          <div>
-            <h4>Matheus Paice</h4>
+        {isLogged ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 20,
+              marginBottom: 40,
+            }}
+          >
+            <div>
+              <h4>{user.name}</h4>
+            </div>
+            <p>
+              <Link
+                to="/"
+                onClick={() => {
+                  handleLogout();
+                  closeSidebar();
+                }}
+              >
+                Sair
+              </Link>
+            </p>
           </div>
-          <p>
-            <a href="#">Sair</a>
-          </p>
-        </div>
+        ) : (
+          <div style={{ textAlign: "center", width: "100%" }}>
+            <Link to="/login" onClick={closeSidebar}>
+              Login
+            </Link>
+          </div>
+        )}
         <ul
           style={{
             listStyle: "none",
@@ -99,7 +117,7 @@ export function Sidebar() {
             margin: 0,
           }}
         >
-          {items.map((item, index) => (
+          {(isLogged ? items : items.slice(0, 1)).map((item, index) => (
             <li
               key={index}
               style={{

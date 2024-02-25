@@ -5,30 +5,29 @@ import { PersonalData } from "./PersonalData";
 import { Products } from "./Products";
 import { Payment } from "./Payment";
 
-const products = [
-  {
-    id: 1,
-    image: "https://source.unsplash.com/300x300/?labtop",
-    name: "Notebook de Notebook",
-    price: 2500,
-    amount: 2,
-  },
-  {
-    id: 2,
-    image: "https://source.unsplash.com/300x300/?smartphone",
-    name: "Smartphone",
-    price: 1500,
-    amount: 1,
-  },
-  {
-    id: 3,
-    image: "https://source.unsplash.com/300x300/?tablet",
-    name: "Tablet",
-    price: 800,
-    amount: 3,
-  },
-];
+import { useNavigate, useParams } from "react-router-dom";
+import { useOrderContext } from "../../context/Orders";
+
+const statusMethods: { [key: string]: string[] } = {
+  ["awaiting"]: ["Aguardando confirmação", "orange"],
+  ["on-the-way"]: ["A caminho", "green"],
+  ["delivered"]: ["Entregue", "blue"],
+  ["canceled"]: ["Cancelado", "red"],
+};
+
 export function Order() {
+  const { id } = useParams();
+  const { orders } = useOrderContext();
+  const navigate = useNavigate();
+
+  const order = orders.find((order) => order.id === id);
+
+  if (!order) {
+    return <p>Pedido não encontrado</p>;
+  }
+
+  const { products, user, payment, status } = order;
+
   return (
     <div>
       <div
@@ -98,21 +97,23 @@ export function Order() {
               textAlign: "center",
               fontSize: 20,
               width: "100%",
-              color: "orange",
+              color: statusMethods[status][1],
               fontWeight: "bold",
             }}
           >
-            Aguardando confirmação
+            {statusMethods[status][0]}
           </p>
         </div>
         <Products products={products} />
-        <PersonalData />
-        <Address />
-        <Payment />
+        <PersonalData user={user} />
+        <Address address={user.address} />
+        <Payment payment={payment} />
 
         <Button variant="text" color="danger">
           Cancelar pedido
         </Button>
+
+        <Button onClick={() => navigate("/")}>Voltar para inicio</Button>
       </div>
     </div>
   );

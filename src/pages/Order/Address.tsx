@@ -1,4 +1,10 @@
-export function Address() {
+import { Address as IAddress } from "../../context/Auth";
+
+interface AddressProps {
+  address: IAddress;
+}
+
+export function Address({ address }: AddressProps) {
   return (
     <div
       style={{
@@ -24,11 +30,15 @@ export function Address() {
           <p>Cidade</p>
         </div>
         <div>
-          <p>99999-999</p>
-          <p>Rua das Flores, 123</p>
-          <p>Apto 123</p>
-          <p>Jardim das Flores</p>
-          <p>São Paulo - SP</p>
+          <p>{address.zipcode}</p>
+          <p>
+            {address.street}, {address.number}
+          </p>
+          <p>{address.complement}</p>
+          <p>{address.neighborhood}</p>
+          <p>
+            {address.city} - {address.state}
+          </p>
         </div>
       </div>
     </div>

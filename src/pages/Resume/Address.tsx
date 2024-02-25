@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../context/Auth";
 
 export function Address() {
+  const { user } = useUserContext();
+
   return (
     <div
       style={{
@@ -33,11 +36,15 @@ export function Address() {
           <p>Cidade</p>
         </div>
         <div>
-          <p>99999-999</p>
-          <p>Rua das Flores, 123</p>
-          <p>Apto 123</p>
-          <p>Jardim das Flores</p>
-          <p>São Paulo - SP</p>
+          <p>{user.address.zipcode.replace(/(\d{5})(\d{3})/, "$1-$2")}</p>
+          <p>
+            {user.address.street}, {user.address.number}
+          </p>
+          <p>{user.address.complement}</p>
+          <p>{user.address.neighborhood}</p>
+          <p>
+            {user.address.city} - {user.address.state}
+          </p>
         </div>
       </div>
     </div>

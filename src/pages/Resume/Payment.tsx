@@ -1,4 +1,9 @@
-export function Payment() {
+interface PaymentProps {
+  payment: string;
+  changePayment: (payment: string) => void;
+}
+
+export function Payment({ payment, changePayment }: PaymentProps) {
   return (
     <div
       style={{
@@ -38,8 +43,14 @@ export function Payment() {
             gap: 10,
           }}
         >
-          <input type="radio" name="payment" id="credit-card" />
-          <label htmlFor="credit-card">Cartão de crédito / débito</label>
+          <input
+            onChange={() => changePayment("card")}
+            checked={payment === "card"}
+            type="radio"
+            name="payment"
+            id="card"
+          />
+          <label htmlFor="card">Cartão de crédito / débito</label>
         </div>
         <div
           style={{
@@ -47,8 +58,14 @@ export function Payment() {
             gap: 10,
           }}
         >
-          <input type="radio" name="payment" id="dinheiro" />
-          <label htmlFor="dinheiro">Dinheiro</label>
+          <input
+            onChange={() => changePayment("cash")}
+            checked={payment === "cash"}
+            type="radio"
+            name="payment"
+            id="cash"
+          />
+          <label htmlFor="cash">Dinheiro</label>
         </div>
         <div
           style={{
@@ -56,7 +73,13 @@ export function Payment() {
             gap: 10,
           }}
         >
-          <input type="radio" name="payment" id="pix" />
+          <input
+            onChange={() => changePayment("pix")}
+            checked={payment === "pix"}
+            type="radio"
+            name="payment"
+            id="pix"
+          />
           <label htmlFor="pix">Pix</label>
         </div>
       </div>

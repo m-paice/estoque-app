@@ -6,6 +6,7 @@ import {
 import { useSidebarContext } from "../context/Sidebar";
 import { Sidebar } from "../components/Sidebar";
 import { useCartContext } from "../context/Cart";
+import { UserProvider } from "../context/Auth";
 
 export function Layout() {
   const navigate = useNavigate();
@@ -13,77 +14,79 @@ export function Layout() {
   const { products } = useCartContext();
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateRows: "80px auto",
-      }}
-    >
-      <header
+    <UserProvider>
+      <div
         style={{
-          padding: 20,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: "grid",
+          gridTemplateRows: "80px auto",
         }}
       >
-        <div
+        <header
           style={{
+            padding: 20,
             display: "flex",
-            gap: 20,
+            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <button
+          <div
             style={{
-              padding: 10,
-              backgroundColor: "#ebf3fe",
-              border: "none",
-              borderRadius: 10,
-              cursor: "pointer",
+              display: "flex",
+              gap: 20,
+              alignItems: "center",
             }}
-            onClick={isSidebarOpen ? closeSidebar : openSidebar}
           >
-            <Bars3BottomLeftIcon width={20} />
-          </button>
-          <h1 onClick={() => navigate("")}>My Store</h1>
-        </div>
-        <div
-          onClick={() => navigate("cart")}
+            <button
+              style={{
+                padding: 10,
+                backgroundColor: "#ebf3fe",
+                border: "none",
+                borderRadius: 10,
+                cursor: "pointer",
+              }}
+              onClick={isSidebarOpen ? closeSidebar : openSidebar}
+            >
+              <Bars3BottomLeftIcon width={20} />
+            </button>
+            <h1 onClick={() => navigate("")}>My Store</h1>
+          </div>
+          <div
+            onClick={() => navigate("cart")}
+            style={{
+              position: "relative",
+            }}
+          >
+            <ShoppingCartIcon width={40} />
+            {products.length > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: -10,
+                  backgroundColor: "red",
+                  color: "white",
+                  borderRadius: "50%",
+                  padding: "5px 10px",
+                  fontSize: 16,
+                }}
+              >
+                {products.length}
+              </span>
+            )}
+          </div>
+        </header>
+        <section
           style={{
-            position: "relative",
+            height: "calc(100vh - 130px)",
+            overflowY: "auto",
+            padding: 20,
           }}
         >
-          <ShoppingCartIcon width={40} />
-          {products.length > 0 && (
-            <span
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: -10,
-                backgroundColor: "red",
-                color: "white",
-                borderRadius: "50%",
-                padding: "5px 10px",
-                fontSize: 16,
-              }}
-            >
-              {products.length}
-            </span>
-          )}
-        </div>
-      </header>
-      <section
-        style={{
-          height: "calc(100vh - 130px)",
-          overflowY: "auto",
-          padding: 20,
-        }}
-      >
-        <Outlet />
-      </section>
+          <Outlet />
+        </section>
 
-      <Sidebar />
-    </div>
+        <Sidebar />
+      </div>
+    </UserProvider>
   );
 }

@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
+import { useOrderContext } from "../context/Orders";
 
 export function Finished() {
   const navigate = useNavigate();
+  const { recent } = useOrderContext();
 
   return (
     <div>
@@ -30,7 +32,7 @@ export function Finished() {
         }}
       >
         <Button onClick={() => navigate("/")}>Voltar para inicio</Button>
-        <Button variant="outlined" onClick={() => navigate("/order/1")}>
+        <Button variant="outlined" onClick={() => navigate(`/order/${recent}`)}>
           Ver detalhes{" "}
         </Button>
       </div>

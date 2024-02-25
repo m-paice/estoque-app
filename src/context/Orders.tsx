@@ -5,44 +5,40 @@ import React, {
   useMemo,
   useState,
 } from "react";
-
 import { Product } from "./Cart";
 import { User } from "./Auth";
 
-interface Order {
+export interface Order {
   id: string;
+  products: Product[];
+  user: User;
+  paymentMethod: string;
   status: string;
   total: number;
-  payment: string;
-  products: Product[];
-  user: Omit<User, "password" & "username">;
   createdAt: Date;
 }
 
 interface OrderContext {
-  orders: Order[];
   recent: string;
-  handleAddOrder: (order: Order) => void;
+
+  handleSetRecent: (id: string) => void;
 }
 
 export const OrdersContext = createContext({} as OrderContext);
 
 export const OrdersProvider = ({ children }: { children: React.ReactNode }) => {
-  const [orders, setOrders] = useState<Order[]>([]);
   const [recent, setRecent] = useState("");
 
-  const handleAddOrder = useCallback((order: Order) => {
-    setOrders((prev) => [...prev, order]);
-    setRecent(order.id);
+  const handleSetRecent = useCallback((id: string) => {
+    setRecent(id);
   }, []);
 
   const value = useMemo(
     () => ({
-      orders,
       recent,
-      handleAddOrder,
+      handleSetRecent,
     }),
-    [orders, recent, handleAddOrder]
+    [recent, handleSetRecent]
   );
 
   return (

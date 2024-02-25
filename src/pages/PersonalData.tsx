@@ -10,14 +10,14 @@ export function PersonalData() {
 
   const [fields, setFields] = useState({
     name: user.name,
-    cellphone: user.cellphone,
+    cellPhone: user.cellPhone,
     document: user.document,
   });
 
   const handleSubmit = () => {
     handleupdatePersonalData({
       name: fields.name,
-      cellphone: fields.cellphone.replace(/\D/g, ""),
+      cellPhone: fields.cellPhone.replace(/\D/g, ""),
       document: fields.document.replace(/\D/g, ""),
     });
 
@@ -55,11 +55,11 @@ export function PersonalData() {
           }}
         >
           <Input
-            value={fields.cellphone.replace(
+            value={fields.cellPhone.replace(
               /(\d{2})(\d{5})(\d{4})/,
               "($1) $2-$3"
             )}
-            onChange={(value) => setFields({ ...fields, cellphone: value })}
+            onChange={(value) => setFields({ ...fields, cellPhone: value })}
             label="Telefone"
           />
           <Input

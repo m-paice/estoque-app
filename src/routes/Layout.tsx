@@ -6,12 +6,18 @@ import {
 import { useSidebarContext } from "../context/Sidebar";
 import { Sidebar } from "../components/Sidebar";
 import { useCartContext } from "../context/Cart";
-import { UserProvider } from "../context/Auth";
+import { UserProvider, useUserContext } from "../context/Auth";
+import { useEffect } from "react";
 
 export function Layout() {
   const navigate = useNavigate();
   const { closeSidebar, isSidebarOpen, openSidebar } = useSidebarContext();
   const { products } = useCartContext();
+  const { isLogged, user } = useUserContext();
+
+  useEffect(() => {
+    if (!isLogged || !user) navigate("/");
+  }, [isLogged, user]);
 
   return (
     <UserProvider>

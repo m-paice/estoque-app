@@ -7,14 +7,17 @@ import { useUserContext } from "../context/Auth";
 export function Address() {
   const navigate = useNavigate();
   const { handleUpdateAddress, user } = useUserContext();
+
+  const address = user.addresses.length > 0 ? user.addresses[0] : null;
+
   const [fields, setFields] = useState({
-    zipcode: user.address.zipcode,
-    street: user.address.street,
-    number: user.address.number,
-    complement: user.address.complement,
-    neighborhood: user.address.neighborhood,
-    city: user.address.city,
-    state: user.address.state,
+    zipcode: address?.zipcode,
+    street: address?.street,
+    number: address?.number,
+    complement: address?.complement,
+    neighborhood: address?.neighborhood,
+    city: address?.city,
+    state: address?.state,
   });
 
   const handleSubmit = () => {

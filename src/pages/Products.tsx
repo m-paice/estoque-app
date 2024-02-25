@@ -3,14 +3,23 @@ import {
   ListBulletIcon,
   TableCellsIcon,
 } from "@heroicons/react/16/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { products } from "../mock/products";
+import { useRequestFindMany } from "../hooks/useRequestFindMany";
+import { Product } from "../context/Cart";
 
 export function Products() {
   const navigate = useNavigate();
   const [isViewColumn, setIsViewColumn] = useState(true);
+
+  const { execute, response: products } = useRequestFindMany<Product>({
+    path: "/products",
+  });
+
+  useEffect(() => {
+    execute();
+  }, []);
 
   return (
     <div>

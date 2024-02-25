@@ -4,7 +4,7 @@ export const users = [
     username: "mpaice",
     password: "123",
     name: "Matheus Paice",
-    cellphone: "14998022422",
+    cellPhone: "14998022422",
     document: "46032801810",
     address: {
       zipcode: "39400485",
@@ -21,7 +21,7 @@ export const users = [
     username: "rrocha",
     password: "123",
     name: "Roane Rocha",
-    cellphone: "38997562629",
+    cellPhone: "38997562629",
     document: "14006373686",
     address: {
       zipcode: "3588451",

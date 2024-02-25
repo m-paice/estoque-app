@@ -40,10 +40,10 @@ export function Products({ products }: Props) {
             >
               <div>
                 <p>
-                  {product.amount}x {product.name}
+                  {product.OrderProducts.amount}x {product.name}
                 </p>
                 <p>
-                  {product.price.toLocaleString("pt-br", {
+                  {product.OrderProducts.subtotal.toLocaleString("pt-br", {
                     style: "currency",
                     currency: "BRL",
                   })}
@@ -53,7 +53,6 @@ export function Products({ products }: Props) {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  // flexDirection: "column",
                   gap: 10,
                 }}
               >

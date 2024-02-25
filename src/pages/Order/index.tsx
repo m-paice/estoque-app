@@ -6,7 +6,9 @@ import { Products } from "./Products";
 import { Payment } from "./Payment";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { useOrderContext } from "../../context/Orders";
+import { useRequestFindOne } from "../../hooks/useRequestFindOne";
+import { useEffect } from "react";
+import { Order as IOrder } from "../../context/Orders";
 
 const statusMethods: { [key: string]: string[] } = {
   ["awaiting"]: ["Aguardando confirmação", "orange"],
@@ -17,16 +19,23 @@ const statusMethods: { [key: string]: string[] } = {
 
 export function Order() {
   const { id } = useParams();
-  const { orders } = useOrderContext();
+
   const navigate = useNavigate();
 
-  const order = orders.find((order) => order.id === id);
+  const { execute, response: order } = useRequestFindOne<IOrder>({
+    path: "/orders",
+    id: id!,
+  });
+
+  useEffect(() => {
+    execute();
+  }, []);
 
   if (!order) {
     return <p>Pedido não encontrado</p>;
   }
 
-  const { products, user, payment, status } = order;
+  const { products, user, paymentMethod, status } = order;
 
   return (
     <div>
@@ -74,7 +83,10 @@ export function Order() {
               }}
             >
               {products
-                .reduce((acc, curr) => acc + curr.price * curr.amount, 0)
+                .reduce(
+                  (acc, curr) => acc + Number(curr.OrderProducts.subtotal),
+                  0
+                )
                 .toLocaleString("pt-br", {
                   style: "currency",
                   currency: "BRL",
@@ -106,8 +118,8 @@ export function Order() {
         </div>
         <Products products={products} />
         <PersonalData user={user} />
-        <Address address={user.address} />
-        <Payment payment={payment} />
+        <Address address={user.addresses[0]} />
+        <Payment payment={paymentMethod} />
 
         <Button variant="text" color="danger">
           Cancelar pedido

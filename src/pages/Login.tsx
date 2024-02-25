@@ -9,8 +9,8 @@ export function Login() {
   const { handleLogin } = useUserContext();
 
   const [fields, setFields] = useState({
-    username: "",
-    password: "",
+    username: "14998022422",
+    password: "1234",
   });
 
   const handleSubmit = () => {

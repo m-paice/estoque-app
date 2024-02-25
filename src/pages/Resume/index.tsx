@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Address } from "./Address";
@@ -7,30 +7,39 @@ import { Products } from "./Products";
 import { Payment } from "./Payment";
 import { Button } from "../../components/Button";
 import { useCartContext } from "../../context/Cart";
-import { useOrderContext } from "../../context/Orders";
 import { useUserContext } from "../../context/Auth";
+import { useRequestCreate } from "../../hooks/useRequestCreate";
+import { useOrderContext } from "../../context/Orders";
 
 export function Resume() {
   const navigate = useNavigate();
   const { clearCart, products } = useCartContext();
-  const { handleAddOrder } = useOrderContext();
+  const { handleSetRecent } = useOrderContext();
   const { user } = useUserContext();
 
-  const [payment, setPayment] = useState("credit-card");
+  const [payment, setPayment] = useState("card");
+
+  const { execute, response } = useRequestCreate({
+    path: "/orders",
+  });
+
+  useEffect(() => {
+    if (response) {
+      handleSetRecent((response as { id: string }).id);
+      clearCart();
+      navigate("/finished");
+    }
+  }, [response]);
 
   const handleFinishOrder = () => {
-    handleAddOrder({
-      createdAt: new Date(),
-      id: Math.random().toString(36).substr(2, 9),
-      payment,
-      products,
-      status: "awaiting",
-      total: products.reduce((acc, curr) => acc + curr.price * curr.amount, 0),
-      user,
+    execute({
+      userId: user.id,
+      products: products.map((product) => ({
+        id: product.id,
+        amount: product.amount,
+      })),
+      paymentMethod: payment,
     });
-
-    navigate("/finished");
-    clearCart();
   };
 
   return (

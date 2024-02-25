@@ -4,6 +4,8 @@ import { useUserContext } from "../../context/Auth";
 export function Address() {
   const { user } = useUserContext();
 
+  const address = user.addresses.length > 0 ? user.addresses[0] : null;
+
   return (
     <div
       style={{
@@ -36,14 +38,14 @@ export function Address() {
           <p>Cidade</p>
         </div>
         <div>
-          <p>{user.address.zipcode.replace(/(\d{5})(\d{3})/, "$1-$2")}</p>
+          <p>{address?.zipcode.replace(/(\d{5})(\d{3})/, "$1-$2")}</p>
           <p>
-            {user.address.street}, {user.address.number}
+            {address?.street}, {address?.number}
           </p>
-          <p>{user.address.complement}</p>
-          <p>{user.address.neighborhood}</p>
+          <p>{address?.complement}</p>
+          <p>{address?.neighborhood}</p>
           <p>
-            {user.address.city} - {user.address.state}
+            {address?.city} - {address?.state}
           </p>
         </div>
       </div>

@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { users } from "../mock/users";
+import { api } from "../services/api";
 
 export interface Address {
   zipcode: string;
@@ -21,12 +21,10 @@ export interface Address {
 
 export interface User {
   id: string;
-  username: string;
-  password: string;
   name: string;
-  cellphone: string;
+  cellPhone: string;
   document: string;
-  address: Address;
+  addresses: Address[];
 }
 
 export interface UserContextProps {
@@ -38,7 +36,7 @@ export interface UserContextProps {
   handleUpdateAddress: (address: Address) => void;
   handleupdatePersonalData: (data: {
     name: string;
-    cellphone: string;
+    cellPhone: string;
     document: string;
   }) => void;
 }
@@ -47,20 +45,10 @@ const UserContext = createContext({} as UserContextProps);
 
 const initialUser = {
   id: "",
-  username: "",
-  password: "",
   name: "",
-  cellphone: "",
+  cellPhone: "",
   document: "",
-  address: {
-    zipcode: "",
-    street: "",
-    number: "",
-    complement: "",
-    city: "",
-    neighborhood: "",
-    state: "",
-  },
+  addresses: [],
 };
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -79,7 +67,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const handleupdatePersonalData = useCallback(
-    (data: { name: string; cellphone: string; document: string }) => {
+    (data: { name: string; cellPhone: string; document: string }) => {
       setUser((user) => ({ ...user, ...data }));
     },
     []
@@ -87,16 +75,24 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const handleLogin = useCallback(
     ({ username, password }: { username: string; password: string }) => {
-      const user = users.find(
-        (user) => user.username === username && user.password === password
-      );
-
-      if (user) {
-        setUser(user);
-        setIsLogged(true);
-
-        navigate("/");
-      } else alert("Usuário ou senha inválidos");
+      api
+        .post("/auth/login", { cellPhone: username, password })
+        .then((response) => {
+          const { data } = response;
+          if (data) {
+            if (user) {
+              setUser({
+                id: data.id,
+                name: data.name ?? "",
+                cellPhone: data.cellPhone ?? "",
+                document: data.document ?? "",
+                addresses: data.addresses ?? [],
+              });
+              setIsLogged(true);
+              navigate("/");
+            } else alert("Usuário ou senha inválidos");
+          }
+        });
     },
     []
   );

@@ -35,7 +35,7 @@ export function PersonalData() {
         </div>
         <div>
           <p>{user.name}</p>
-          <p>{user.cellphone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}</p>
+          <p>{user.cellPhone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")}</p>
           <p>
             {user.document.replace(
               /(\d{3})(\d{3})(\d{3})(\d{2})/,

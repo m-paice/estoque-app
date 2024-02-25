@@ -7,11 +7,12 @@ import { Colors } from "../components/Colors";
 import { Sizes } from "../components/Sizes";
 import { useCartContext } from "../context/Cart";
 
-import { products } from "../mock/products";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRequestFindOne } from "../hooks/useRequestFindOne";
+import { Product } from "../services/products/types";
 
 export function Details() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addProduct } = useCartContext();
 
@@ -19,7 +20,14 @@ export function Details() {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
 
-  const product = products.find((product) => product.id === id);
+  const { execute, response: product } = useRequestFindOne<Product>({
+    path: "/products",
+    id: id!,
+  });
+
+  useEffect(() => {
+    execute();
+  }, []);
 
   const handleAddProduct = () => {
     if (!product) return;
@@ -157,13 +165,13 @@ export function Details() {
               }}
             >
               <Colors
-                colors={product.colors ?? []}
+                colors={product.colors.map((item) => item.value) ?? []}
                 selectedColor={color}
                 handleSelectColor={handleSelectColor}
                 hideSelectedColor={product.colors?.length ? false : true}
               />
               <Sizes
-                sizes={product.sizes ?? []}
+                sizes={product.sizes.map((item) => item.value) ?? []}
                 selectedSize={size}
                 handleSelectedSize={handleSelectSize}
                 hideSelectedSize={product.sizes?.length ? false : true}

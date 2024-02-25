@@ -6,6 +6,11 @@ import {
   useState,
 } from "react";
 
+interface OrderProducts {
+  amount: number;
+  subtotal: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -14,6 +19,8 @@ export interface Product {
   amount: number;
   color: string;
   size: string;
+  oldPrice?: number;
+  OrderProducts: OrderProducts;
 }
 
 export interface CartContextProps {
